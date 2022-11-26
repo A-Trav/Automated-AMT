@@ -8,7 +8,6 @@ class AMTSchema(ma.SQLAlchemyAutoSchema):
         model = Amt
         load_instance = True
 
-    MP_PT = fields.Str(required = True, validate = validate.Length(min=2))
     snomed = fields.Nested(SnomedSchema, required = False)
 
 amt_schema = AMTSchema()
