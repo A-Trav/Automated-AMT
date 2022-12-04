@@ -7,7 +7,8 @@ class AMTSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Amt
         load_instance = True
-
+    
+    ID = fields.Int(required = False)
     snomed = fields.Nested(SnomedSchema, required = False)
 
 amt_schema = AMTSchema()

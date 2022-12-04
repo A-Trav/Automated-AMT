@@ -2,7 +2,7 @@ import pytest
 from flask import jsonify, json
 from datetime import date
 
-from app import app
+from Test.fixtures import app
 from Model.admin import Admin
 from Schema.admin import admin_schema
 from Model.amt import Amt, Snomed
@@ -11,19 +11,13 @@ from Schema.snomed import snomed_schema
 from Model.version import Version
 from Schema.version import version_schema
 
-@pytest.fixture(scope = 'module')
-def setup_test_context():
-    app.config['Testing'] = True
-    yield app
-
-
 def check_no_error_occurs(error_list):
     assert len(error_list) == 0
 
 def check_error_occurs(error_list):
     assert len(error_list) != 0 
 
-def test_admin():
+def test_admin(app):
     check_no_error_occurs(admin_schema.validate({
         'username': 'test_user', 
         'password': 'test_password', 
@@ -63,7 +57,7 @@ def test_admin():
     assert schema_json.json['password'] == 'test_password'
     assert schema_json.json['email'] == 'test_email@hotmail.com'
 
-def test_amt():
+def test_amt(app):
 
     check_no_error_occurs(amt_schema.validate({
         'CTPP_SCTID': 'test_field1',
@@ -87,26 +81,6 @@ def test_amt():
 
     check_no_error_occurs(amt_schema.validate({
         'MP_PT': 'test_field16'
-    }))
-    
-    check_error_occurs(amt_schema.validate({
-        'ID': 1,
-        'CTPP_SCTID': 'test_field1',
-        'CTPP_PT': 'test_field2',
-        'ARTG_ID': 'test_field3',
-        'TPP_SCTID': 'test_field4',
-        'TPUU_PT': 'test_field5',
-        'TPP_PT': 'test_field6',
-        'TPUU_SCTID': 'test_field7',
-        'TPP_TP_SCTID': 'test_field8',
-        'TPP_TP_PT': 'test_field9',
-        'TPUU_TP_SCTID': 'test_field9',
-        'TPUU_TP_PT': 'test_field10',
-        'MPP_SCTID': 'test_field11',
-        'MPP_PT': 'test_field12',
-        'MPUU_SCTID': 'test_field13',
-        'MPUU_PT': 'test_field14',
-        'MP_SCTID': 'test_field15',
     }))
     
     amt = Amt('test_field1', 'test_field2', 'test_field3', 'test_field4', 'test_field5', 
@@ -160,15 +134,10 @@ def test_amt():
     assert schema_json.json['snomed']['AU_Substance_SCTID'] == 'test_field2'
     assert schema_json.json['snomed']['Int_Substance_SCTID'] == 'test_field3'
 
-def test_snomed():
+def test_snomed(app):
 
     check_no_error_occurs(snomed_schema.validate({
         'MP_PT': 'test_field1',
-        'AU_Substance_SCTID': 'test_field2',
-        'Int_Substance_SCTID': 'test_field3',
-    }))
-
-    check_error_occurs(snomed_schema.validate({
         'AU_Substance_SCTID': 'test_field2',
         'Int_Substance_SCTID': 'test_field3',
     }))
@@ -181,7 +150,7 @@ def test_snomed():
     with pytest.raises(Exception):
         schema_json.json['amt']  == None  # Not a valid field in the Snomed Schema
 
-def test_version():
+def test_version(app):
 
     check_no_error_occurs(version_schema.validate({
         'date': str(date.today()),

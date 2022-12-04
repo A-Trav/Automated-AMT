@@ -6,7 +6,8 @@ db = SQLAlchemy()
 ma = Marshmallow()
 
 def initalize_db(app):
-    app.app_context().push()
-    db.init_app(app)
-    db.create_all()
-    db.session.commit()
+    # app.app_context().push()
+    with app.app_context():
+        db.init_app(app)
+        db.create_all()
+        db.session.commit()

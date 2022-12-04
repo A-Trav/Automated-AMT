@@ -35,8 +35,8 @@ class Amt(Base, db.Model):
     MPUU_SCTID = db.Column(db.String, nullable=True)
     MPUU_PT = db.Column(db.String, nullable=True)
     MP_SCTID = db.Column(db.String, nullable=True)
-    MP_PT = db.Column(db.String, nullable=False) 
-    Snomed = db.Column(db.String, ForeignKey('Snomed.MP_PT'), nullable=False)
+    MP_PT = db.Column(db.String, nullable=True) 
+    Snomed = db.Column(db.String, ForeignKey('Snomed.MP_PT', ondelete='CASCADE'), nullable=True)
 
     def __init__(self, CTPP_SCTID, CTPP_PT, ARTG_ID, TPP_SCTID,
         TPUU_PT, TPP_PT, TPUU_SCTID, TPP_TP_SCTID, TPP_TP_PT,
