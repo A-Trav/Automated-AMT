@@ -10,6 +10,11 @@ marshmallow = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 pytest = "*"
+atoma = "*"
+requests = "*"
+pandas = "*"
+apscheduler = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

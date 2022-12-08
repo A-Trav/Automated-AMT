@@ -8,6 +8,8 @@ def create_app(config_file):
     from Handler.update import update
     from Handler.delete import delete
     from Handler.export import export
+    from ScheduledTask.scheduler import scheduler_init_app
+    from Utils.startup_tasks import import_snomed_csv
 
     # Initialise application
     app = Flask(__name__)
@@ -25,8 +27,13 @@ def create_app(config_file):
     ma.init_app(app)
     initalize_db(app)
 
+    if not app.config['TESTING']:
+        scheduler_init_app(app)
+
+    import_snomed_csv(app)
+
     return app
 
 if __name__ == '__main__':
     app = create_app('app_config.cfg')
-    app.run(port = 8080, debug = True)
+    app.run(port = 8080, debug = True, use_reloader=False)
