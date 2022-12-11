@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from Schema.amt import amts_schema, amt_schema 
 from Schema.snomed import snomed_schema, snomeds_schema 
-from Service.search import amt_search_by_id, amt_search_by_fields_ret_all
+from Service.search import amt_search_by_id, amt_search_by_fields_ret_all, amt_unmapped_search
 from Service.search import snomed_search_by_id,  snomed_search_by_fields_ret_all  
 
 search = Blueprint('search', __name__)
@@ -48,4 +48,11 @@ def get_snomed_search():
             
         return snomeds_schema.jsonify(snomed_search_by_fields_ret_all(filters))
     except:
-        return jsonify({'msg': 'The server could not process the request'}), 400       
+        return jsonify({'msg': 'The server could not process the request'}), 400     
+
+@search.get('/search/amt/unmapped')
+def get_unmapped_amt():
+    # try:
+        return amts_schema.jsonify(amt_unmapped_search()) 
+    # except:
+    #     return jsonify({'msg': 'The server could not process the request'}), 400      

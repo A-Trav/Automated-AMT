@@ -1,20 +1,16 @@
 import pytest
 
 from Database.database import db
-from Test.fixtures import app, test_client
+from Test.fixtures import app, test_client, clean_database
 from Service.create import create_amt, create_snomed
 from Model.amt import Amt, Snomed
-
-def clear_tables():
-    db.session.query(Amt).delete()
-    db.session.query(Snomed).delete()
-    db.session.commit()
 
 def test_auth_handler(test_client):
     res = test_client.post('/auth')
     assert res.status_code == 200
 
-def test_create_handler(test_client):
+def test_create_handler(test_client, clean_database):
+    clean_database
     res = test_client.post('/create/amt', json = {
         'create': {
             'CTPP_SCTID': 'test_field1',
@@ -69,8 +65,7 @@ def test_create_handler(test_client):
     assert res.json['AU_Substance_SCTID'] == 'test_field2'
     assert res.json['Int_Substance_SCTID'] == 'test_field3'
 
-def test_delete_handler(test_client):
-    clear_tables()
+def test_delete_handler(test_client, clean_database):
 
     #  /delete/snomed
     snomed = create_snomed('test_field1', 'test_field2', 'test_field3')
@@ -160,9 +155,7 @@ def test_export_handler(test_client):
     res = test_client.get('/export')
     assert res.status_code == 200
 
-def test_search_handler(test_client):
-    clear_tables()
-
+def test_search_handler(test_client, clean_database):
     snomed = create_snomed('snomed_test_field1', 'snomed_test_field2', 'snomed_test_field3')
     create_amt('test_field1', 'test_field2', 'test_field3', 'test_field4', 'test_field5', 
             'test_field6', 'test_field7', 'test_field8', 'test_field9', 'test_field10', 
@@ -249,9 +242,7 @@ def test_search_handler(test_client):
     assert res.json[0]['Int_Substance_SCTID'] == 'snomed_test_field3'
 
 
-def test_update_handler(test_client):
-    clear_tables()
-
+def test_update_handler(test_client, clean_database):
     snomed = create_snomed('snomed_test_field1', 'snomed_test_field2', 'snomed_test_field3')
 
     # /update/snomed/AU_Substance_SCTID/id

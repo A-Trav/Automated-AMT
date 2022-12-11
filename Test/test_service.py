@@ -2,7 +2,7 @@ import pytest
 from flask import jsonify
 from datetime import date
 
-from Test.fixtures import app
+from Test.fixtures import app, clean_database
 from Database.database import db
 from Service.admin import get_admin_user_by_username, get_admin_user, create_admin, get_admin_email
 from Service.create import create_amt, create_snomed
@@ -15,12 +15,7 @@ from Service.update import update_Int_Substance_SCTID_by_filters, update_Int_Sub
 from Service.version import get_version, create_version, delete_versions
 from Model.amt import Amt, Snomed
 
-def clear_tables():
-    db.session.query(Amt).delete()
-    db.session.query(Snomed).delete()
-    db.session.commit()
-
-def test_admin_service(app):
+def test_admin_service(app, clean_database):
     assert get_admin_user() == None
     create_admin('test_admin', 'test_password', 'test_email@hotmail.com')
 
@@ -39,8 +34,7 @@ def test_admin_service(app):
     email = get_admin_email()
     assert email == 'test_email@hotmail.com'
 
-def test_create_service(app):
-    clear_tables()
+def test_create_service(app, clean_database):
     assert len(Amt.query.all()) == 0
     assert len(Snomed.query.all()) == 0
 
@@ -105,8 +99,7 @@ def test_create_service(app):
     assert snomed.AU_Substance_SCTID == 'snomed_test_field1'
     assert snomed.Int_Substance_SCTID == 'snomed_test_field2'
 
-def test_delete_service(app):
-    clear_tables()
+def test_delete_service(app, clean_database):
     assert len(Amt.query.all()) == 0
     assert len(Snomed.query.all()) == 0
 
@@ -221,11 +214,10 @@ def test_delete_service(app):
     assert amt_delete_by_id(1) != None
     assert amt_search_by_id(1) == None
 
-def test_search_service(app):
-    clear_tables()
+def test_search_service(app, clean_database):
     assert len(Amt.query.all()) == 0
     assert len(Snomed.query.all()) == 0
-
+    
     create_snomed('test_field17', 'snomed_test_field1', 'snomed_test_field2') 
     create_amt('test_field1', 'test_field2', 'test_field3', 'test_field4', 'test_field5', 
             'test_field6', 'test_field7', 'test_field8', 'test_field9', 'test_field10', 
@@ -322,28 +314,7 @@ def test_search_service(app):
     assert snomed.AU_Substance_SCTID == 'snomed_test_field1'
     assert snomed.Int_Substance_SCTID == 'snomed_test_field2'
     
-    create_snomed('second_test_field17', 'snomed_test_field1', 'snomed_test_field2')     
-    create_snomed('third_test_field17', 'snomed_test_field1', 'snomed_test_field2')     
-    
-    filters = {'MP_PT': 'second_test_field17'}
-    snomed = snomed_search_by_fields_ret_one(filters)
-    assert snomed.MP_PT == 'second_test_field17'
-    assert snomed.AU_Substance_SCTID == 'snomed_test_field1'
-    assert snomed.Int_Substance_SCTID == 'snomed_test_field2'
-
-    filters = {'AU_Substance_SCTID': 'snomed_test_field1'}
-    with pytest.raises(Exception):
-        snomed = snomed_search_by_fields_ret_one(filters)
-    
-    filters = {'AU_Substance_SCTID': 'snomed_test_field1', 'Int_Substance_SCTID': 'snomed_test_field2'}
-    snomeds = snomed_search_by_fields_ret_all(filters)
-    assert len(snomeds) == 3
-    for snomed in snomeds:
-        assert snomed.AU_Substance_SCTID == 'snomed_test_field1'
-        assert snomed.Int_Substance_SCTID == 'snomed_test_field2'
-
-def test_update_service(app):
-    clear_tables()
+def test_update_service(app, clean_database):
     assert len(Amt.query.all()) == 0
     assert len(Snomed.query.all()) == 0
 

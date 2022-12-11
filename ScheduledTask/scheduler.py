@@ -10,5 +10,4 @@ def scheduler_init_app(app):
     scheduler.add_job(lambda: importer_task(app),'interval', minutes = 1, next_run_time = start_time)
     logging.getLogger('apscheduler').setLevel(logging.DEBUG)
     scheduler.start()
-
-atexit.register(lambda: scheduler.shutdown(wait=True))
+    atexit.register(lambda: scheduler.shutdown(wait=True))

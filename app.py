@@ -1,6 +1,6 @@
 from flask import Flask
 
-def create_app(config_file):
+def create_app(config):
     from Database.database import initalize_db, ma
     from Handler.auth import auth
     from Handler.create import create
@@ -13,7 +13,7 @@ def create_app(config_file):
 
     # Initialise application
     app = Flask(__name__)
-    app.config.from_pyfile(config_file)
+    app.config.from_object(config)
 
     # Routes
     app.register_blueprint(auth)
@@ -27,13 +27,14 @@ def create_app(config_file):
     ma.init_app(app)
     initalize_db(app)
 
-    if not app.config['TESTING']:
+    if app.config['TESTING'] != True:
         scheduler_init_app(app)
+        import_snomed_csv(app)
 
-    import_snomed_csv(app)
 
     return app
 
 if __name__ == '__main__':
-    app = create_app('app_config.cfg')
+    from config import AppConfig
+    app = create_app(AppConfig)
     app.run(port = 8080, debug = True, use_reloader=False)
