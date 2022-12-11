@@ -52,7 +52,7 @@ def get_snomed_search():
 
 @search.get('/search/amt/unmapped')
 def get_unmapped_amt():
-    # try:
+    try:
         return amts_schema.jsonify(amt_unmapped_search()) 
-    # except:
-    #     return jsonify({'msg': 'The server could not process the request'}), 400      
+    except:
+        return jsonify({'msg': 'The server could not process the request'}), 400      

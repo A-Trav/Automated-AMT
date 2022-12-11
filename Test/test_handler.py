@@ -241,6 +241,31 @@ def test_search_handler(test_client, clean_database):
     assert res.json[0]['AU_Substance_SCTID'] == 'snomed_test_field2'
     assert res.json[0]['Int_Substance_SCTID'] == 'snomed_test_field3'
 
+    # /search/amt/unmapped
+    create_amt('test_field1', 'test_field2', 'test_field3', 'test_field4', 'test_field5', 
+            'test_field6', 'test_field7', 'test_field8', 'test_field9', 'test_field10', 
+            'test_field11', 'test_field12', 'test_field13', 'test_field14', 'test_field15',
+            'test_field16', 'snomed_test_field2')
+    res = test_client.get('/search/amt/unmapped')
+    assert len(res.json) == 1
+    assert res.json[0]['CTPP_SCTID'] == 'test_field1'
+    assert res.json[0]['CTPP_PT'] == 'test_field2'
+    assert res.json[0]['ARTG_ID'] == 'test_field3'
+    assert res.json[0]['TPP_SCTID'] == 'test_field4'
+    assert res.json[0]['TPUU_PT'] == 'test_field5'
+    assert res.json[0]['TPP_PT'] == 'test_field6'
+    assert res.json[0]['TPUU_SCTID'] == 'test_field7'
+    assert res.json[0]['TPP_TP_SCTID'] == 'test_field8'
+    assert res.json[0]['TPP_TP_PT'] == 'test_field9'
+    assert res.json[0]['TPUU_TP_SCTID'] == 'test_field10'
+    assert res.json[0]['TPUU_TP_PT'] == 'test_field11'
+    assert res.json[0]['MPP_SCTID'] == 'test_field12'
+    assert res.json[0]['MPP_PT'] == 'test_field13'
+    assert res.json[0]['MPUU_SCTID'] == 'test_field14'
+    assert res.json[0]['MPUU_PT'] == 'test_field15'
+    assert res.json[0]['MP_SCTID'] == 'test_field16'
+    assert res.json[0]['MP_PT'] == 'snomed_test_field2'
+    assert res.json[0]['snomed'] == None
 
 def test_update_handler(test_client, clean_database):
     snomed = create_snomed('snomed_test_field1', 'snomed_test_field2', 'snomed_test_field3')
