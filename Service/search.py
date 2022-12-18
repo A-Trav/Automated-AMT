@@ -28,5 +28,11 @@ def amt_search_by_id(id):
 def snomed_search_by_id(id):
     return Snomed.query.get(id)
 
+def amt_query_all():
+    return Amt.query.all()
+
+def snomed_query_all():
+    return Snomed.query.all()
+
 def amt_unmapped_search():
     return Amt.query.join(Snomed, isouter=True).filter(Snomed.MP_PT == None).all()
