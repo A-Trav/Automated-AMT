@@ -185,7 +185,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span><span class="s2">&quot;Automated AMT - Manual resolution required&quot;</span><span class="p">,</span>
                 <span class="n">recipients</span><span class="o">=</span><span class="p">[</span><span class="n">get_admin_email</span><span class="p">()])</span>
-    <span class="k">assert</span> <span class="n">msg</span><span class="o">.</span><span class="n">sender</span> <span class="o">==</span> <span class="s1">&#39;***REMOVED***&#39;</span>
+    <span class="k">assert</span> <span class="n">msg</span><span class="o">.</span><span class="n">sender</span> <span class="o">==</span> <span class="s1">&#39;automated.amt.application@gmail.com&#39;</span>
     <span class="n">msg</span><span class="o">.</span><span class="n">body</span> <span class="o">=</span> <span class="n">format_exc</span><span class="p">()</span>
     <span class="n">mail</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 </pre></div>

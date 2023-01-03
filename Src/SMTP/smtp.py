@@ -20,6 +20,6 @@ def alert_admin_failure():
     """
     msg = Message("Automated AMT - Manual resolution required",
                 recipients=[get_admin_email()])
-    assert msg.sender == '***REMOVED***'
+    assert msg.sender == 'automated.amt.application@gmail.com'
     msg.body = format_exc()
     mail.send(msg)
