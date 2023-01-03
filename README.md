@@ -16,7 +16,7 @@ View the source code documentation here: [https://a-trav.github.io/Automated-AMT
 
 ## API Reference
 
-## General Access Endpoints
+### General Access Endpoints
 
 All endpoints listed here require no authentication headers.
 
