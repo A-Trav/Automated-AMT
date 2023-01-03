@@ -1,7 +1,13 @@
+"""
+The export handler module: Export endpoint.
+
+Provides the applications export REST method for exporting the applications
+joined Amt and Snomed tables, as a CSV file.
+"""
+
 from flask import Blueprint, Response, jsonify
 from Utils.lib import retrieve_export_csv
-
-import pandas as pd 
+import logging 
 
 export = Blueprint('export', __name__)
 
@@ -15,4 +21,5 @@ def get_export():
             "attachment; filename=amt_snomed_export.csv"}
         )
     except:
+        logging.exception('Export handler failure')
         return jsonify({'msg': 'The server could not process the request'}), 400  

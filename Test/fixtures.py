@@ -2,6 +2,8 @@ import pytest
 from app import create_app
 from Database.database import db, initalize_db
 from config import TestConfig
+from datetime import timedelta
+from Auth.auth import bcrypt
 
 @pytest.fixture(scope = 'session')
 def app():
@@ -24,3 +26,10 @@ def clean_database():
     Admin.query.delete()
     Version.query.delete()
     db.session.commit()
+
+@pytest.fixture(scope = 'session')
+def JWT_token():
+    from Service.admin import create_admin
+    from flask_jwt_extended import create_access_token
+    create_admin('test_admin', bcrypt.generate_password_hash('password'), 'test_email@gmail.com.au')
+    return create_access_token({'username': 'test_admin'}, timedelta(minutes=5))

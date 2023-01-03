@@ -1,3 +1,7 @@
+"""
+The lib module: Random Utility functions.
+"""
+
 from os import listdir, remove, makedirs
 from os.path import isfile, join, exists
 from Schema.amt import amts_schema

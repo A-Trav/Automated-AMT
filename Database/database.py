@@ -1,10 +1,18 @@
+"""
+The database module: Database for application.
+
+Provides globals and functionality to support the applications
+required SQLite database and ORM modelling.
+"""
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from app_logging import log
 
-# DB related globals
 db = SQLAlchemy()
 ma = Marshmallow()
 
+@log
 def initalize_db(app):
     from Model.amt import Amt, Snomed
     from Model.version import Version

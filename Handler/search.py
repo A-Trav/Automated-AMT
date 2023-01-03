@@ -1,8 +1,16 @@
+"""
+The search handler module: Search endpoint.
+
+Provides the applications search REST methods for querying the Snomed and Amt
+SQLite tables based on primary key or field filters.
+"""
+
 from flask import Blueprint, request, jsonify
 from Schema.amt import amts_schema, amt_schema 
 from Schema.snomed import snomed_schema, snomeds_schema 
 from Service.search import amt_search_by_id, amt_search_by_fields_ret_all, amt_unmapped_search
 from Service.search import snomed_search_by_id,  snomed_search_by_fields_ret_all  
+import logging
 
 search = Blueprint('search', __name__)
 
@@ -12,6 +20,7 @@ def get_amt_search_id():
         id = request.args['id']
         return amt_schema.jsonify(amt_search_by_id(id)) 
     except:
+        logging.exception('Search AMT by ID handler failure')
         return jsonify({'msg': 'The server could not process the request'}), 400        
 
 @search.get('/search/snomed/id')
@@ -20,6 +29,7 @@ def get_snomed_search_key():
         id = request.args['id']
         return snomed_schema.jsonify(snomed_search_by_id(id)) 
     except:
+        logging.exception('Search SNOMED by ID handler failure')
         return jsonify({'msg': 'The server could not process the request'}), 400   
 
 @search.get('/search/amt')
@@ -34,6 +44,7 @@ def get_amt_search():
 
         return amts_schema.jsonify(amt_search_by_fields_ret_all(filters))
     except:
+        logging.exception('search AMT handler failure')
         return jsonify({'msg': 'The server could not process the request'}), 400    
 
 @search.get('/search/snomed')
@@ -48,6 +59,7 @@ def get_snomed_search():
             
         return snomeds_schema.jsonify(snomed_search_by_fields_ret_all(filters))
     except:
+        logging.exception('Search SNOMED handler failure')
         return jsonify({'msg': 'The server could not process the request'}), 400     
 
 @search.get('/search/amt/unmapped')
@@ -55,4 +67,5 @@ def get_unmapped_amt():
     try:
         return amts_schema.jsonify(amt_unmapped_search()) 
     except:
+        logging.exception('Search AMT unmapped handler failure')
         return jsonify({'msg': 'The server could not process the request'}), 400      

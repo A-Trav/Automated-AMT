@@ -1,3 +1,10 @@
+"""
+The http module: HTTP request utilities.
+
+Provides functionality to process the received responses from HTTP requests 
+sent by the application in order to integrate with the NCTS Server.
+"""
+
 import atoma, requests
 
 def response_to_csv(http_response, file_name): 

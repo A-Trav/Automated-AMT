@@ -1,3 +1,10 @@
+"""
+The version model module: Version table model.
+
+Provides the applications object relational model for the version SQLite 
+database table.
+"""
+
 from Database.database import db
 
 class Version(db.Model):

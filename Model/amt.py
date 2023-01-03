@@ -1,3 +1,10 @@
+"""
+The amt model module: Amt and Snomed table models.
+
+Provides the applications object relational model for both the Amt and Snomed
+SQLite database tables.
+"""
+
 from Database.database import db
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship

@@ -1,7 +1,16 @@
+"""
+The post_ncts_auth module: NCTS Authentication HTTP Request.
+
+Provides the application with functionality to make a HTTP request
+to the NCTS server in-order to retrieve an authentication token.
+"""
+
 from flask import jsonify
 import requests
 import os
+from app_logging import log
 
+@log
 def get_auth_token():
     req = {
         'grant_type': os.getenv('GRANT_TYPE'), 

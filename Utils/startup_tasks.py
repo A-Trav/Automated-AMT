@@ -1,3 +1,9 @@
+"""
+The startup_tasks module: Application startup tasks.
+
+Provides the application with tasks intended to be run on application startup.
+"""
+
 import pandas as pd
 from os.path import join
 

@@ -1,16 +1,21 @@
 import pytest
-
+from flask_jwt_extended import create_access_token
+from requests.auth import _basic_auth_str
 from Database.database import db
-from Test.fixtures import app, test_client, clean_database
+from Test.fixtures import app, test_client, clean_database, JWT_token
 from Service.create import create_amt, create_snomed
+from Service.admin import create_admin
 from Model.amt import Amt, Snomed
 
-def test_auth_handler(test_client):
-    res = test_client.post('/auth')
+def test_auth_handler(test_client, JWT_token):
+    res = test_client.post('/auth', headers = {
+        'Authorization': _basic_auth_str('test_admin', 'password')
+    })
     assert res.status_code == 200
+    assert res.json['access_token'] != None
 
-def test_create_handler(test_client, clean_database):
-    clean_database
+def test_create_handler(test_client, clean_database, JWT_token):
+    header = {'Authorization': 'Bearer {}'.format(JWT_token)}
     res = test_client.post('/create/amt', json = {
         'create': {
             'CTPP_SCTID': 'test_field1',
@@ -31,7 +36,8 @@ def test_create_handler(test_client, clean_database):
             'MP_SCTID': 'test_field16',
             'MP_PT': 'test_field17'
         }
-    })
+    }, 
+    headers = header)
 
     assert res.status_code == 200
     assert res.json['CTPP_SCTID'] == 'test_field1'
@@ -58,23 +64,24 @@ def test_create_handler(test_client, clean_database):
             'AU_Substance_SCTID': 'test_field2',
             'Int_Substance_SCTID': 'test_field3'
         }
-    })
+    }, headers = header)
 
     assert res.status_code == 200
     assert res.json['MP_PT'] == 'test_field1'
     assert res.json['AU_Substance_SCTID'] == 'test_field2'
     assert res.json['Int_Substance_SCTID'] == 'test_field3'
 
-def test_delete_handler(test_client, clean_database):
+def test_delete_handler(test_client, clean_database, JWT_token):
 
     #  /delete/snomed
     snomed = create_snomed('test_field1', 'test_field2', 'test_field3')
+    header = {'Authorization': 'Bearer {}'.format(JWT_token)}
     res = test_client.delete('/delete/snomed', json = {
         'filters': {
             'MP_PT': 'test_field1',
             'AU_Substance_SCTID': 'test_field2'
         }
-    })
+    }, headers = header)
 
     assert res.status_code == 200
     assert res.json['MP_PT'] == 'test_field1'
@@ -92,7 +99,7 @@ def test_delete_handler(test_client, clean_database):
             'CTPP_SCTID': 'test_field1',
             'CTPP_PT': 'test_field2'
         }
-    })
+    }, headers = header)
 
     assert res.status_code == 200
     assert res.json['CTPP_SCTID'] == 'test_field1'
@@ -116,7 +123,8 @@ def test_delete_handler(test_client, clean_database):
     #  /delete/snomed/id
     snomed = create_snomed('test_field1', 'test_field2', 'test_field3')
     res = test_client.delete('/delete/snomed/id', 
-        query_string = {'id': 'test_field1'})
+        query_string = {'id': 'test_field1'},
+        headers = header)
 
     assert res.status_code == 200
     assert res.json['MP_PT'] == 'test_field1'
@@ -130,7 +138,8 @@ def test_delete_handler(test_client, clean_database):
 
     #  /delete/amt/id
     res = test_client.delete('/delete/amt/id', 
-        query_string = {'id': '1'})
+        query_string = {'id': '1'},
+        headers = header)
 
     assert res.status_code == 200
     assert res.json['CTPP_SCTID'] == 'test_field1'
@@ -152,6 +161,11 @@ def test_delete_handler(test_client, clean_database):
     assert res.json['MP_PT'] == 'test_field17'
 
 def test_export_handler(test_client):
+    create_snomed('snomed_test_field1', 'snomed_test_field2', 'snomed_test_field3')
+    create_amt('test_field1', 'test_field2', 'test_field3', 'test_field4', 'test_field5', 
+            'test_field6', 'test_field7', 'test_field8', 'test_field9', 'test_field10', 
+            'test_field11', 'test_field12', 'test_field13', 'test_field14', 'test_field15',
+            'test_field16', 'snomed_test_field1')
     res = test_client.get('/export')
     assert res.status_code == 200
 
@@ -267,13 +281,14 @@ def test_search_handler(test_client, clean_database):
     assert res.json[0]['MP_PT'] == 'snomed_test_field2'
     assert res.json[0]['snomed'] == None
 
-def test_update_handler(test_client, clean_database):
+def test_update_handler(test_client, clean_database, JWT_token):
     snomed = create_snomed('snomed_test_field1', 'snomed_test_field2', 'snomed_test_field3')
-
+    header = {'Authorization': 'Bearer {}'.format(JWT_token)}
     # /update/snomed/AU_Substance_SCTID/id
     res = test_client.put('/update/snomed/AU_Substance_SCTID/id', 
         query_string = {'id': 'snomed_test_field1'}, 
-        json = {'AU_Substance_SCTID': 'new_snomed_test_field2'}
+        json = {'AU_Substance_SCTID': 'new_snomed_test_field2'},
+        headers = header
     )
 
     assert res.status_code == 200
@@ -287,8 +302,8 @@ def test_update_handler(test_client, clean_database):
         'filters': {
             'AU_Substance_SCTID': 'new_snomed_test_field2',
             'Int_Substance_SCTID': 'snomed_test_field3',
-        }
-    })
+        },
+    }, headers = header)
 
     assert res.status_code == 200
     assert res.json['MP_PT'] == 'snomed_test_field1'
@@ -298,7 +313,8 @@ def test_update_handler(test_client, clean_database):
     # /update/snomed/Int_Substance_SCTID/id
     res = test_client.put('/update/snomed/Int_Substance_SCTID/id', 
         query_string = {'id': 'snomed_test_field1'},
-        json = {'Int_Substance_SCTID': 'new_snomed_test_field3'}
+        json = {'Int_Substance_SCTID': 'new_snomed_test_field3'},
+        headers = header
     )
 
     assert res.status_code == 200
@@ -313,7 +329,7 @@ def test_update_handler(test_client, clean_database):
             'AU_Substance_SCTID': 'snomed_test_field2',
             'Int_Substance_SCTID': 'snomed_test_field3',
         }
-    })
+    }, headers = header)
 
     assert res.status_code == 200
     assert res.json['MP_PT'] == 'snomed_test_field1'
