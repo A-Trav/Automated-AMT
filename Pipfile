@@ -15,6 +15,10 @@ requests = "*"
 pandas = "*"
 apscheduler = "*"
 python-dotenv = "*"
+waitress = "*"
+flask-jwt-extended = "*"
+flask-bcrypt = "*"
+flask-mail = "*"
 
 [dev-packages]
 
