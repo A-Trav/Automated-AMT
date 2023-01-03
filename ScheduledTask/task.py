@@ -1,3 +1,10 @@
+"""
+The task module: Application AMT import task.
+
+Provides the applications AMT distribution import tasks to be run by the 
+task scheduler on a daily basis.
+"""
+
 import os, logging, json
 import pandas as pd 
 
@@ -10,12 +17,14 @@ from Utils.http import response_to_csv, xml_response_to_version
 from Utils.lib import is_outdated_versions, delete_csv_dist_collection, setup_data_dir
 from Utils.constants import DATA_DIR
 from Service.amt_rebuild import delete_amt_table, rebuild_table_from_dict
+from SMTP.smtp import alert_admin_failure
+from Auth.auth import reset_jwt
+from app_logging import log
 
-from Model.version import Version
-
+@log
 def importer_task(app):
     with app.app_context():
-        print('Starting task')
+        logging.info('Starting AMT distribution importer task.')
         try:
             setup_data_dir()
             versions = xml_response_to_version(get_distro_meta())
@@ -48,10 +57,14 @@ def importer_task(app):
                 create_version(date = latest_version_key, 
                         file = versions[latest_version_key]['file_name'], 
                         link = versions[latest_version_key]['link'])
-                
+                        
+                # Invalidate admin jwt to prevent db operation conflict with new distribution
+                reset_jwt(app)
             else:
-                logging.debug('Current AMT distribution is up to date.')
-        except Exception as e:
-            # This is where we will need to alert admin for via email of catastrophic failure 
-            raise e
+                logging.info('Current AMT distribution is up to date.')
+        except:
+            logging.exception('AMT distribution update failure')
+            alert_admin_failure()
+
+        logging.info('AMT distribution importer task finished.')
 

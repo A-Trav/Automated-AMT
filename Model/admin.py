@@ -1,3 +1,10 @@
+"""
+The admin model module: Admin table model.
+
+Provides the applications object relational model for the admin SQLite 
+database table.
+"""
+
 from Database.database import db
 
 class Admin(db.Model):

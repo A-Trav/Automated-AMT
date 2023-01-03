@@ -1,3 +1,11 @@
+"""
+The admin schema module: Admin table schema.
+
+Provides the applications object relational model schema validation and
+synchronization for the admin SQLite table. To support the integration of
+CRUD functionality with REST API.
+"""
+
 from marshmallow import fields, validate, Schema 
 from Database.database import ma
 from Model.admin import Admin
