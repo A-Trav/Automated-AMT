@@ -96,8 +96,15 @@
 <li class="toctree-l1"><a class="reference internal" href="Src.Model.html">Model package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Src.Requests.html">Requests package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">ScheduledTask package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#scheduledtask-scheduler-module">ScheduledTask.scheduler module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#scheduledtask-task-module">ScheduledTask.task module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.ScheduledTask.scheduler">ScheduledTask.scheduler module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.ScheduledTask.scheduler.scheduler"><code class="docutils literal notranslate"><span class="pre">scheduler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.ScheduledTask.scheduler.scheduler_init_app"><code class="docutils literal notranslate"><span class="pre">scheduler_init_app()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.ScheduledTask.task">ScheduledTask.task module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.ScheduledTask.task.importer_task"><code class="docutils literal notranslate"><span class="pre">importer_task()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Src.Schema.html">Schema package</a></li>
@@ -175,11 +182,48 @@
             
   <section id="scheduledtask-package">
 <h1>ScheduledTask package<a class="headerlink" href="#scheduledtask-package" title="Permalink to this heading">¶</a></h1>
-<section id="scheduledtask-scheduler-module">
-<h2>ScheduledTask.scheduler module<a class="headerlink" href="#scheduledtask-scheduler-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-Src.ScheduledTask.scheduler">
+<span id="scheduledtask-scheduler-module"></span><h2>ScheduledTask.scheduler module<a class="headerlink" href="#module-Src.ScheduledTask.scheduler" title="Permalink to this heading">¶</a></h2>
+<p>The scheduler module: Application task scheduler.</p>
+<p>Provides the applications task scheduler for running the AMT distribution
+import task on a daily basis.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="Src.ScheduledTask.scheduler.scheduler">
+<span class="sig-prename descclassname"><span class="pre">Src.ScheduledTask.scheduler.</span></span><span class="sig-name descname"><span class="pre">scheduler</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;apscheduler.schedulers.background.BackgroundScheduler</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#Src.ScheduledTask.scheduler.scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background scheduler global</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.ScheduledTask.scheduler.scheduler_init_app">
+<span class="sig-prename descclassname"><span class="pre">Src.ScheduledTask.scheduler.</span></span><span class="sig-name descname"><span class="pre">scheduler_init_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/ScheduledTask/scheduler.html#scheduler_init_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.ScheduledTask.scheduler.scheduler_init_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integrates and runs the background scheduler global with the current Flask application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>app</strong> (<em>Flask applicaton</em>) – The current flask application to initialize the scheduler with</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="scheduledtask-task-module">
-<h2>ScheduledTask.task module<a class="headerlink" href="#scheduledtask-task-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-Src.ScheduledTask.task">
+<span id="scheduledtask-task-module"></span><h2>ScheduledTask.task module<a class="headerlink" href="#module-Src.ScheduledTask.task" title="Permalink to this heading">¶</a></h2>
+<p>The task module: Application AMT import task.</p>
+<p>Provides the applications AMT distribution import tasks to be run by the 
+task scheduler on a daily basis.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.ScheduledTask.task.importer_task">
+<span class="sig-prename descclassname"><span class="pre">Src.ScheduledTask.task.</span></span><span class="sig-name descname"><span class="pre">importer_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/ScheduledTask/task.html#importer_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.ScheduledTask.task.importer_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>The task to be scheduler and run by the applications background scheduler. This task
+aims to check for updates for new AMT distributions provided by the NCTS API. If the task
+fails to run successfully, the registered admin user of the Flask application will be notified 
+via email.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>app</strong> (<em>Flask applicaton</em>) – The current flask application to provide application context with</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

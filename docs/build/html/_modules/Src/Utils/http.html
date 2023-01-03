@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Src.Utils.http &mdash; Automated AMT 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Automated AMT
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.html">Src package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Auth.html">Auth package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Database.html">Database package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Handler.html">Handler package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Model.html">Model package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Requests.html">Requests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.ScheduledTask.html">ScheduledTask package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Schema.html">Schema package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Service.html">Service package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.SMTP.html">SMTP package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Utils.html">Utils package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Automated AMT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>Src.Utils.http</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for Src.Utils.http</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The http module: HTTP request utilities.</span>
+
+<span class="sd">Provides functionality to process the received responses from HTTP requests </span>
+<span class="sd">sent by the application in order to integrate with the NCTS Server.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">atoma</span><span class="o">,</span> <span class="nn">requests</span>
+
+<div class="viewcode-block" id="response_to_csv"><a class="viewcode-back" href="../../../Src.Utils.html#Src.Utils.http.response_to_csv">[docs]</a><span class="k">def</span> <span class="nf">response_to_csv</span><span class="p">(</span><span class="n">http_response</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span> 
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieves and downloads the given CSV file from a HTTP request response</span>
+
+<span class="sd">    :param http_response: The response object to retrieve the CSV file from</span>
+<span class="sd">    :type http_response: Response</span>
+<span class="sd">    :param file_name: The file name to save the CSV file as</span>
+<span class="sd">    :type file_name: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">http_response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;content-type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;text/csv&#39;</span><span class="p">):</span>
+        <span class="n">csv_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">http_response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
+                <span class="n">csv_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+        <span class="n">csv_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="xml_response_to_version"><a class="viewcode-back" href="../../../Src.Utils.html#Src.Utils.http.xml_response_to_version">[docs]</a><span class="k">def</span> <span class="nf">xml_response_to_version</span><span class="p">(</span><span class="n">http_response</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts the NCTS API available distribution response in to a easily passable dictionary</span>
+<span class="sd">    consisting of only the available AMT distributions.</span>
+
+<span class="sd">    :param http_response: The response object to retrieve the CSV file from</span>
+<span class="sd">    :type http_response: Response</span>
+<span class="sd">    :return: A dictionary representation of all available AMT distribution</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">http_response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;content-type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;application/xml&#39;</span><span class="p">):</span>
+        <span class="n">versions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">feed</span> <span class="o">=</span> <span class="n">atoma</span><span class="o">.</span><span class="n">parse_atom_bytes</span><span class="p">(</span><span class="n">http_response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">feed</span><span class="o">.</span><span class="n">entries</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">categories</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">term</span> <span class="o">==</span> <span class="s1">&#39;AMT_CSV&#39;</span><span class="p">:</span>
+                <span class="n">date</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">published</span>
+                <span class="n">link</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">links</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">href</span>
+                <span class="n">file_name</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">versions</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span><span class="p">:</span> <span class="n">link</span><span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">versions</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023, Ashley Travaini.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

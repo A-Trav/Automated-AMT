@@ -114,7 +114,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-Src.Utils.constants">Utils.constants module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#utils-http-module">Utils.http module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Utils.http">Utils.http module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Utils.http.response_to_csv"><code class="docutils literal notranslate"><span class="pre">response_to_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Utils.http.xml_response_to_version"><code class="docutils literal notranslate"><span class="pre">xml_response_to_version()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#module-Src.Utils.lib">Utils.lib module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Src.Utils.lib.delete_csv_dist_collection"><code class="docutils literal notranslate"><span class="pre">delete_csv_dist_collection()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Src.Utils.lib.is_outdated_versions"><code class="docutils literal notranslate"><span class="pre">is_outdated_versions()</span></code></a></li>
@@ -288,8 +292,43 @@ applications admin user.</p>
 <p>The constants module: Application constants.</p>
 <p>Provides global constants to be used throughout the application.</p>
 </section>
-<section id="utils-http-module">
-<h2>Utils.http module<a class="headerlink" href="#utils-http-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-Src.Utils.http">
+<span id="utils-http-module"></span><h2>Utils.http module<a class="headerlink" href="#module-Src.Utils.http" title="Permalink to this heading">¶</a></h2>
+<p>The http module: HTTP request utilities.</p>
+<p>Provides functionality to process the received responses from HTTP requests 
+sent by the application in order to integrate with the NCTS Server.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Utils.http.response_to_csv">
+<span class="sig-prename descclassname"><span class="pre">Src.Utils.http.</span></span><span class="sig-name descname"><span class="pre">response_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Utils/http.html#response_to_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Utils.http.response_to_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves and downloads the given CSV file from a HTTP request response</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>http_response</strong> (<em>Response</em>) – The response object to retrieve the CSV file from</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – The file name to save the CSV file as</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Utils.http.xml_response_to_version">
+<span class="sig-prename descclassname"><span class="pre">Src.Utils.http.</span></span><span class="sig-name descname"><span class="pre">xml_response_to_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_response</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Utils/http.html#xml_response_to_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Utils.http.xml_response_to_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the NCTS API available distribution response in to a easily passable dictionary
+consisting of only the available AMT distributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>http_response</strong> (<em>Response</em>) – The response object to retrieve the CSV file from</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representation of all available AMT distribution</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-Src.Utils.lib">
 <span id="utils-lib-module"></span><h2>Utils.lib module<a class="headerlink" href="#module-Src.Utils.lib" title="Permalink to this heading">¶</a></h2>
