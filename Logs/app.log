@@ -1,0 +1,52 @@
+2022-12-19 20:48:09 - INFO - app_logging - 19872 - Entering function: initalize_db with ((<Flask 'app'>,), {})
+2022-12-19 20:48:09 - INFO - app_logging - 19872 - Exiting function: initalize_db
+2022-12-19 20:48:10 - INFO - base - 19872 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2022-12-19 20:48:10 - INFO - base - 19872 - Added job "scheduler_init_app.<locals>.<lambda>" to job store "default"
+2022-12-19 20:48:10 - INFO - base - 19872 - Scheduler started
+2022-12-19 20:48:10 - INFO - app_logging - 19872 - Entering function: snomed_record_count with ((), {})
+2022-12-19 20:48:10 - INFO - app_logging - 19872 - Exiting function: snomed_record_count
+2022-12-19 20:48:10 - INFO - app_logging - 19872 - Entering function: get_admin_user with ((), {})
+2022-12-19 20:48:10 - INFO - app_logging - 19872 - Exiting function: get_admin_user
+2022-12-19 20:49:04 - INFO - app - 20084 - API call made to: http://127.0.0.1:8080/search/snomed/id?id=prop
+2022-12-19 20:49:04 - INFO - app_logging - 20084 - Entering function: snomed_search_by_id with (('prop',), {})
+2022-12-19 20:49:04 - INFO - app_logging - 20084 - Exiting function: snomed_search_by_id
+2022-12-19 20:49:09 - INFO - base - 16572 - Running job "scheduler_init_app.<locals>.<lambda> (trigger: interval[0:01:00], next run at: 2022-12-19 20:50:09 AEST)" (scheduled at 2022-12-19 20:49:09.979303+10:00)
+2022-12-19 20:49:09 - INFO - app_logging - 16572 - Entering function: importer_task with ((<Flask 'app'>,), {})
+2022-12-19 20:49:09 - INFO - task - 16572 - Starting AMT distribution importer task.
+2022-12-19 20:49:09 - INFO - app_logging - 16572 - Entering function: get_distro_meta with ((), {})
+2022-12-19 20:49:10 - INFO - app_logging - 16572 - Exiting function: get_distro_meta
+2022-12-19 20:49:10 - INFO - app_logging - 16572 - Entering function: get_version with ((), {})
+2022-12-19 20:49:10 - INFO - app_logging - 16572 - Exiting function: get_version
+2022-12-19 20:49:10 - INFO - task - 16572 - Current AMT distribution is up to date.
+2022-12-19 20:49:10 - INFO - task - 16572 - AMT distribution importer task finished.
+2022-12-19 20:49:10 - INFO - app_logging - 16572 - Exiting function: importer_task
+2022-12-19 20:49:10 - INFO - base - 16572 - Job "scheduler_init_app.<locals>.<lambda> (trigger: interval[0:01:00], next run at: 2022-12-19 20:50:09 AEST)" executed successfully
+2022-12-19 20:49:11 - INFO - app - 20084 - API call made to: http://127.0.0.1:8080/search/snomed/id?id=prop
+2022-12-19 20:49:11 - INFO - app_logging - 20084 - Entering function: snomed_search_by_id with (('prop',), {})
+2022-12-19 20:49:11 - INFO - app_logging - 20084 - Exiting function: snomed_search_by_id
+2022-12-19 20:49:48 - INFO - app - 20084 - API call made to: http://127.0.0.1:8080/search/snomed/id?id=prop
+2022-12-19 20:49:48 - INFO - app_logging - 20084 - Entering function: snomed_search_by_id with (('prop',), {})
+2022-12-19 20:49:48 - INFO - app_logging - 20084 - Exiting function: snomed_search_by_id
+2022-12-19 20:50:03 - INFO - base - 19872 - Scheduler has been shut down
+2022-12-19 20:57:51 - INFO - app_logging - 7332 - Entering function: initalize_db with ((<Flask 'app'>,), {})
+2022-12-19 20:57:51 - INFO - app_logging - 7332 - Exiting function: initalize_db
+2022-12-19 20:57:51 - INFO - base - 7332 - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2022-12-19 20:57:51 - INFO - base - 7332 - Added job "scheduler_init_app.<locals>.<lambda>" to job store "default"
+2022-12-19 20:57:51 - INFO - base - 7332 - Scheduler started
+2022-12-19 20:57:51 - INFO - app_logging - 7332 - Entering function: snomed_record_count with ((), {})
+2022-12-19 20:57:51 - INFO - app_logging - 7332 - Exiting function: snomed_record_count
+2022-12-19 20:57:51 - INFO - app_logging - 7332 - Entering function: get_admin_user with ((), {})
+2022-12-19 20:57:51 - INFO - app_logging - 7332 - Exiting function: get_admin_user
+2022-12-19 20:57:51 - INFO - app - 7332 - Starting server
+2022-12-19 20:58:51 - INFO - base - 21036 - Running job "scheduler_init_app.<locals>.<lambda> (trigger: interval[0:01:00], next run at: 2022-12-19 20:59:51 AEST)" (scheduled at 2022-12-19 20:58:51.594721+10:00)
+2022-12-19 20:58:51 - INFO - app_logging - 21036 - Entering function: importer_task with ((<Flask 'app'>,), {})
+2022-12-19 20:58:51 - INFO - task - 21036 - Starting AMT distribution importer task.
+2022-12-19 20:58:51 - INFO - app_logging - 21036 - Entering function: get_distro_meta with ((), {})
+2022-12-19 20:58:51 - INFO - app_logging - 21036 - Exiting function: get_distro_meta
+2022-12-19 20:58:51 - INFO - app_logging - 21036 - Entering function: get_version with ((), {})
+2022-12-19 20:58:51 - INFO - app_logging - 21036 - Exiting function: get_version
+2022-12-19 20:58:51 - INFO - task - 21036 - Current AMT distribution is up to date.
+2022-12-19 20:58:51 - INFO - task - 21036 - AMT distribution importer task finished.
+2022-12-19 20:58:51 - INFO - app_logging - 21036 - Exiting function: importer_task
+2022-12-19 20:58:51 - INFO - base - 21036 - Job "scheduler_init_app.<locals>.<lambda> (trigger: interval[0:01:00], next run at: 2022-12-19 20:59:51 AEST)" executed successfully
+2022-12-19 20:59:49 - INFO - base - 7332 - Scheduler has been shut down
