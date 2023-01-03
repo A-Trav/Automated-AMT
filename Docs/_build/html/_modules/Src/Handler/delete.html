@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Src.Handler.delete &mdash; Automated AMT 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Automated AMT
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.html">Src package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Auth.html">Auth package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Database.html">Database package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Handler.html">Handler package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Model.html">Model package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Requests.html">Requests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.ScheduledTask.html">ScheduledTask package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Schema.html">Schema package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Service.html">Service package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.SMTP.html">SMTP package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Src.Utils.html">Utils package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Automated AMT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>Src.Handler.delete</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for Src.Handler.delete</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The delete handler module: Delete endpoint.</span>
+
+<span class="sd">Provides the applications delete REST methods for deleting database records</span>
+<span class="sd">from both the Snomed and Amt SQLite tables.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span>
+<span class="kn">from</span> <span class="nn">flask_jwt_extended</span> <span class="kn">import</span> <span class="n">jwt_required</span>
+<span class="kn">from</span> <span class="nn">Schema.amt</span> <span class="kn">import</span> <span class="n">amt_schema</span>
+<span class="kn">from</span> <span class="nn">Schema.snomed</span> <span class="kn">import</span> <span class="n">snomed_schema</span>
+<span class="kn">from</span> <span class="nn">Schema.amt</span> <span class="kn">import</span> <span class="n">AMTSchema</span>
+<span class="kn">from</span> <span class="nn">Service.delete</span> <span class="kn">import</span> <span class="n">amt_delete_by_id</span><span class="p">,</span> <span class="n">amt_delete_by_filter</span>
+<span class="kn">from</span> <span class="nn">Service.delete</span> <span class="kn">import</span> <span class="n">snomed_delete_by_id</span><span class="p">,</span> <span class="n">snomed_delete_by_filter</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">delete</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;The delete endpoint blueprint&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="delete_amt_by_id"><a class="viewcode-back" href="../../../Src.Handler.html#Src.Handler.delete.delete_amt_by_id">[docs]</a><span class="nd">@delete</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;/delete/amt/id&#39;</span><span class="p">)</span>
+<span class="nd">@jwt_required</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">delete_amt_by_id</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The REST method used to delete an AMT record from the Flask applications SQLite database,</span>
+<span class="sd">    by ID. This REST method requires JWT authetication.</span>
+
+<span class="sd">    :return: The REST methods JSON response and response code</span>
+<span class="sd">    :rtype: JSON, Int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">AMTSchema</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;snomed&#39;</span><span class="p">,))</span>         
+        <span class="k">return</span> <span class="n">schema</span><span class="o">.</span><span class="n">jsonify</span><span class="p">(</span><span class="n">amt_delete_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span> 
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Delete AMT by ID handler failure&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;The server could not process the request&#39;</span><span class="p">}),</span> <span class="mi">400</span></div>
+
+<div class="viewcode-block" id="delete_snomed_by_key"><a class="viewcode-back" href="../../../Src.Handler.html#Src.Handler.delete.delete_snomed_by_key">[docs]</a><span class="nd">@delete</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;/delete/snomed/id&#39;</span><span class="p">)</span>
+<span class="nd">@jwt_required</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">delete_snomed_by_key</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The REST method used to delete a SNOMED record from the Flask applications SQLite database,</span>
+<span class="sd">    by primary key. This REST method requires JWT authetication.</span>
+
+<span class="sd">    :return: The REST methods JSON response and response code</span>
+<span class="sd">    :rtype: JSON, Int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">snomed_schema</span><span class="o">.</span><span class="n">jsonify</span><span class="p">(</span><span class="n">snomed_delete_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span> 
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Delete SNOMED by ID handler failure&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;The server could not process the request&#39;</span><span class="p">}),</span> <span class="mi">400</span></div>
+
+<div class="viewcode-block" id="delete_amt_by_filter"><a class="viewcode-back" href="../../../Src.Handler.html#Src.Handler.delete.delete_amt_by_filter">[docs]</a><span class="nd">@delete</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;/delete/amt&#39;</span><span class="p">)</span>
+<span class="nd">@jwt_required</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">delete_amt_by_filter</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The REST method used to delete an AMT record from the Flask applications SQLite database,</span>
+<span class="sd">    by field filter/s. This REST method requires JWT authetication.</span>
+
+<span class="sd">    :return: The REST methods JSON response and response code</span>
+<span class="sd">    :rtype: JSON, Int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;filters&#39;</span><span class="p">]</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">amt_schema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid filters in request&#39;</span><span class="p">}),</span> <span class="mi">400</span>
+        
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">AMTSchema</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;snomed&#39;</span><span class="p">,))</span>     
+        <span class="k">return</span> <span class="n">schema</span><span class="o">.</span><span class="n">jsonify</span><span class="p">(</span><span class="n">amt_delete_by_filter</span><span class="p">(</span><span class="n">filters</span><span class="p">))</span> 
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Delete AMT handler failure&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;The server could not process the request&#39;</span><span class="p">}),</span> <span class="mi">400</span></div>
+
+<div class="viewcode-block" id="delete_snomed_by_filter"><a class="viewcode-back" href="../../../Src.Handler.html#Src.Handler.delete.delete_snomed_by_filter">[docs]</a><span class="nd">@delete</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;/delete/snomed&#39;</span><span class="p">)</span>
+<span class="nd">@jwt_required</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">delete_snomed_by_filter</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The REST method used to delete a SNOMED record from the Flask applications SQLite database,</span>
+<span class="sd">    by field filter/s. This REST method requires JWT authetication.</span>
+
+<span class="sd">    :return: The REST methods JSON response and response code</span>
+<span class="sd">    :rtype: JSON, Int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">[</span><span class="s1">&#39;filters&#39;</span><span class="p">]</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">snomed_schema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid filters in request&#39;</span><span class="p">}),</span> <span class="mi">400</span>
+
+        <span class="k">return</span> <span class="n">snomed_schema</span><span class="o">.</span><span class="n">jsonify</span><span class="p">(</span><span class="n">snomed_delete_by_filter</span><span class="p">(</span><span class="n">filters</span><span class="p">))</span> 
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Delete SNOMED handler failure&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;The server could not process the request&#39;</span><span class="p">}),</span> <span class="mi">400</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023, Ashley Travaini.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -19,6 +19,8 @@ waitress = "*"
 flask-jwt-extended = "*"
 flask-bcrypt = "*"
 flask-mail = "*"
+sphinx = "*"
+sphinx-rtd-theme = "*"
 
 [dev-packages]
 

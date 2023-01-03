@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Handler package &mdash; Automated AMT 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Model package" href="Src.Model.html" />
+    <link rel="prev" title="Database package" href="Src.Database.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Automated AMT
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Src.html">Src package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Auth.html">Auth package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Database.html">Database package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Handler package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Handler.auth">Handler.auth module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.auth.auth"><code class="docutils literal notranslate"><span class="pre">auth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.auth.post_auth"><code class="docutils literal notranslate"><span class="pre">post_auth()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Handler.create">Handler.create module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.create.create"><code class="docutils literal notranslate"><span class="pre">create</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.create.post_amt_create"><code class="docutils literal notranslate"><span class="pre">post_amt_create()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.create.post_snomed_create"><code class="docutils literal notranslate"><span class="pre">post_snomed_create()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Handler.delete">Handler.delete module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.delete.delete"><code class="docutils literal notranslate"><span class="pre">delete</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.delete.delete_amt_by_filter"><code class="docutils literal notranslate"><span class="pre">delete_amt_by_filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.delete.delete_amt_by_id"><code class="docutils literal notranslate"><span class="pre">delete_amt_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.delete.delete_snomed_by_filter"><code class="docutils literal notranslate"><span class="pre">delete_snomed_by_filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.delete.delete_snomed_by_key"><code class="docutils literal notranslate"><span class="pre">delete_snomed_by_key()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Handler.export">Handler.export module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.export.export"><code class="docutils literal notranslate"><span class="pre">export</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.export.get_export"><code class="docutils literal notranslate"><span class="pre">get_export()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Handler.search">Handler.search module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.search.get_amt_search"><code class="docutils literal notranslate"><span class="pre">get_amt_search()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.search.get_amt_search_id"><code class="docutils literal notranslate"><span class="pre">get_amt_search_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.search.get_snomed_search"><code class="docutils literal notranslate"><span class="pre">get_snomed_search()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.search.get_snomed_search_key"><code class="docutils literal notranslate"><span class="pre">get_snomed_search_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.search.get_unmapped_amt"><code class="docutils literal notranslate"><span class="pre">get_unmapped_amt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.search.search"><code class="docutils literal notranslate"><span class="pre">search</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Handler.update">Handler.update module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.update.put_update_AU_Substance_SCTID_by_filters"><code class="docutils literal notranslate"><span class="pre">put_update_AU_Substance_SCTID_by_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.update.put_update_AU_Substance_SCTID_by_id"><code class="docutils literal notranslate"><span class="pre">put_update_AU_Substance_SCTID_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.update.put_update_Int_Substance_SCTID_by_filters"><code class="docutils literal notranslate"><span class="pre">put_update_Int_Substance_SCTID_by_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.update.put_update_Int_Substance_SCTID_by_id"><code class="docutils literal notranslate"><span class="pre">put_update_Int_Substance_SCTID_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Handler.update.update"><code class="docutils literal notranslate"><span class="pre">update</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Model.html">Model package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Requests.html">Requests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.ScheduledTask.html">ScheduledTask package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Schema.html">Schema package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Service.html">Service package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.SMTP.html">SMTP package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Utils.html">Utils package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Automated AMT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="Src.html">Src package</a> &raquo;</li>
+        
+      <li>Handler package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Src.Handler.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="handler-package">
+<h1>Handler package<a class="headerlink" href="#handler-package" title="Permalink to this heading">¶</a></h1>
+<section id="module-Src.Handler.auth">
+<span id="handler-auth-module"></span><h2>Handler.auth module<a class="headerlink" href="#module-Src.Handler.auth" title="Permalink to this heading">¶</a></h2>
+<p>The auth handler module: Authentication endpoint.</p>
+<p>Provides the applications authentication REST method for admin authentication
+and admin clients JWT retrieval.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="Src.Handler.auth.auth">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.auth.</span></span><span class="sig-name descname"><span class="pre">auth</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Blueprint</span> <span class="pre">'auth'&gt;</span></em><a class="headerlink" href="#Src.Handler.auth.auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>The auth endpoint blueprint</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.auth.post_auth">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.auth.</span></span><span class="sig-name descname"><span class="pre">post_auth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/auth.html#post_auth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.auth.post_auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to authenticate an admin user, in order to generate a JWT token
+for authentication with the applications JWT required endpoints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Handler.create">
+<span id="handler-create-module"></span><h2>Handler.create module<a class="headerlink" href="#module-Src.Handler.create" title="Permalink to this heading">¶</a></h2>
+<p>The create handler module: Create endpoint.</p>
+<p>Provides the applications create REST methods for creating new database
+records within the Snomed and Amt SQLite tables.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="Src.Handler.create.create">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.create.</span></span><span class="sig-name descname"><span class="pre">create</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Blueprint</span> <span class="pre">'create'&gt;</span></em><a class="headerlink" href="#Src.Handler.create.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>The create endpoint blueprint</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.create.post_amt_create">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.create.</span></span><span class="sig-name descname"><span class="pre">post_amt_create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/create.html#post_amt_create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.create.post_amt_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to create a new AMT record within the Flask applications SQLite database.
+This REST method requires JWT authetication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.create.post_snomed_create">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.create.</span></span><span class="sig-name descname"><span class="pre">post_snomed_create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/create.html#post_snomed_create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.create.post_snomed_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to create a new SNOMED record within the Flask applications SQLite database. 
+This REST method requires JWT authetication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Handler.delete">
+<span id="handler-delete-module"></span><h2>Handler.delete module<a class="headerlink" href="#module-Src.Handler.delete" title="Permalink to this heading">¶</a></h2>
+<p>The delete handler module: Delete endpoint.</p>
+<p>Provides the applications delete REST methods for deleting database records
+from both the Snomed and Amt SQLite tables.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="Src.Handler.delete.delete">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.delete.</span></span><span class="sig-name descname"><span class="pre">delete</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Blueprint</span> <span class="pre">'delete'&gt;</span></em><a class="headerlink" href="#Src.Handler.delete.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>The delete endpoint blueprint</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.delete.delete_amt_by_filter">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.delete.</span></span><span class="sig-name descname"><span class="pre">delete_amt_by_filter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/delete.html#delete_amt_by_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.delete.delete_amt_by_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to delete an AMT record from the Flask applications SQLite database,
+by field filter/s. This REST method requires JWT authetication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.delete.delete_amt_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.delete.</span></span><span class="sig-name descname"><span class="pre">delete_amt_by_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/delete.html#delete_amt_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.delete.delete_amt_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to delete an AMT record from the Flask applications SQLite database,
+by ID. This REST method requires JWT authetication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.delete.delete_snomed_by_filter">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.delete.</span></span><span class="sig-name descname"><span class="pre">delete_snomed_by_filter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/delete.html#delete_snomed_by_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.delete.delete_snomed_by_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to delete a SNOMED record from the Flask applications SQLite database,
+by field filter/s. This REST method requires JWT authetication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.delete.delete_snomed_by_key">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.delete.</span></span><span class="sig-name descname"><span class="pre">delete_snomed_by_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/delete.html#delete_snomed_by_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.delete.delete_snomed_by_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to delete a SNOMED record from the Flask applications SQLite database,
+by primary key. This REST method requires JWT authetication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Handler.export">
+<span id="handler-export-module"></span><h2>Handler.export module<a class="headerlink" href="#module-Src.Handler.export" title="Permalink to this heading">¶</a></h2>
+<p>The export handler module: Export endpoint.</p>
+<p>Provides the applications export REST method for exporting the applications
+joined Amt and Snomed tables, as a CSV file.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="Src.Handler.export.export">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.export.</span></span><span class="sig-name descname"><span class="pre">export</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Blueprint</span> <span class="pre">'export'&gt;</span></em><a class="headerlink" href="#Src.Handler.export.export" title="Permalink to this definition">¶</a></dt>
+<dd><p>The export endpoint blueprint</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.export.get_export">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.export.</span></span><span class="sig-name descname"><span class="pre">get_export</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/export.html#get_export"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.export.get_export" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to export both the AMT and SNOMED distribution tables as a singularly joined and formatted table,
+that is then exported as a CSV file. This REST method requires JWT authentication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Handler.search">
+<span id="handler-search-module"></span><h2>Handler.search module<a class="headerlink" href="#module-Src.Handler.search" title="Permalink to this heading">¶</a></h2>
+<p>The search handler module: Search endpoint.</p>
+<p>Provides the applications search REST methods for querying the Snomed and Amt
+SQLite tables based on primary key or field filters.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.search.get_amt_search">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.search.</span></span><span class="sig-name descname"><span class="pre">get_amt_search</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/search.html#get_amt_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.search.get_amt_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to query AMT records from within the Flask applications SQLite database,
+by field filter/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.search.get_amt_search_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.search.</span></span><span class="sig-name descname"><span class="pre">get_amt_search_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/search.html#get_amt_search_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.search.get_amt_search_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to query AMT records from within the Flask applications SQLite database,
+by ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.search.get_snomed_search">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.search.</span></span><span class="sig-name descname"><span class="pre">get_snomed_search</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/search.html#get_snomed_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.search.get_snomed_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to query SNOMED records from within the Flask applications SQLite database,
+by field filter/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.search.get_snomed_search_key">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.search.</span></span><span class="sig-name descname"><span class="pre">get_snomed_search_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/search.html#get_snomed_search_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.search.get_snomed_search_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to query Snomed records from within the Flask applications SQLite database,
+by primary key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.search.get_unmapped_amt">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.search.</span></span><span class="sig-name descname"><span class="pre">get_unmapped_amt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/search.html#get_unmapped_amt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.search.get_unmapped_amt" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to query AMT records from within the Flask applications SQLite database,
+that have no foreign key mapping to the SNOMED SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="Src.Handler.search.search">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.search.</span></span><span class="sig-name descname"><span class="pre">search</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Blueprint</span> <span class="pre">'search'&gt;</span></em><a class="headerlink" href="#Src.Handler.search.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>The search endpoint blueprint</p>
+</dd></dl>
+
+</section>
+<section id="module-Src.Handler.update">
+<span id="handler-update-module"></span><h2>Handler.update module<a class="headerlink" href="#module-Src.Handler.update" title="Permalink to this heading">¶</a></h2>
+<p>The update handler module: Update endpoint.</p>
+<p>Provides the applications update REST methods for updating records in the
+Snomed SQLite table. Updated records are queried based on
+primary key or field filters.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.update.put_update_AU_Substance_SCTID_by_filters">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.update.</span></span><span class="sig-name descname"><span class="pre">put_update_AU_Substance_SCTID_by_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/update.html#put_update_AU_Substance_SCTID_by_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.update.put_update_AU_Substance_SCTID_by_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to update a SNOMED records AU_Substance_SCTID field from within the Flask 
+applications SQLite database, by field filter/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.update.put_update_AU_Substance_SCTID_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.update.</span></span><span class="sig-name descname"><span class="pre">put_update_AU_Substance_SCTID_by_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/update.html#put_update_AU_Substance_SCTID_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.update.put_update_AU_Substance_SCTID_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to update a SNOMED records AU_Substance_SCTID field from within the Flask 
+applications SQLite database, by ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.update.put_update_Int_Substance_SCTID_by_filters">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.update.</span></span><span class="sig-name descname"><span class="pre">put_update_Int_Substance_SCTID_by_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/update.html#put_update_Int_Substance_SCTID_by_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.update.put_update_Int_Substance_SCTID_by_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to update a SNOMED records Int_Substance_SCTID field from within the Flask 
+applications SQLite database, by field filter/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Handler.update.put_update_Int_Substance_SCTID_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.update.</span></span><span class="sig-name descname"><span class="pre">put_update_Int_Substance_SCTID_by_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Handler/update.html#put_update_Int_Substance_SCTID_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Handler.update.put_update_Int_Substance_SCTID_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The REST method used to update a SNOMED records Int_Substance_SCTID field from within the Flask 
+applications SQLite database, by ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The REST methods JSON response and response code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON, Int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="Src.Handler.update.update">
+<span class="sig-prename descclassname"><span class="pre">Src.Handler.update.</span></span><span class="sig-name descname"><span class="pre">update</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Blueprint</span> <span class="pre">'update'&gt;</span></em><a class="headerlink" href="#Src.Handler.update.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>The update endpoint blueprint</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Src.Model.html" class="btn btn-neutral float-right" title="Model package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Src.Database.html" class="btn btn-neutral float-left" title="Database package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023, Ashley Travaini.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

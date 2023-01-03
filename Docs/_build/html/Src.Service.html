@@ -1,0 +1,835 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Service package &mdash; Automated AMT 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Utils package" href="Src.Utils.html" />
+    <link rel="prev" title="Schema package" href="Src.Schema.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Automated AMT
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Src.html">Src package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Auth.html">Auth package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Database.html">Database package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Handler.html">Handler package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Model.html">Model package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Requests.html">Requests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.ScheduledTask.html">ScheduledTask package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Schema.html">Schema package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Service package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Service.admin">Service.admin module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.admin.create_admin"><code class="docutils literal notranslate"><span class="pre">create_admin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.admin.delete_admin"><code class="docutils literal notranslate"><span class="pre">delete_admin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.admin.get_admin_email"><code class="docutils literal notranslate"><span class="pre">get_admin_email()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.admin.get_admin_user"><code class="docutils literal notranslate"><span class="pre">get_admin_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.admin.get_admin_user_by_username"><code class="docutils literal notranslate"><span class="pre">get_admin_user_by_username()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Service.amt_rebuild">Service.amt_rebuild module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.amt_rebuild.delete_amt_table"><code class="docutils literal notranslate"><span class="pre">delete_amt_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.amt_rebuild.rebuild_table_from_dict"><code class="docutils literal notranslate"><span class="pre">rebuild_table_from_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Service.create">Service.create module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.create.create_amt"><code class="docutils literal notranslate"><span class="pre">create_amt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.create.create_snomed"><code class="docutils literal notranslate"><span class="pre">create_snomed()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Service.delete">Service.delete module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.delete.amt_delete_by_filter"><code class="docutils literal notranslate"><span class="pre">amt_delete_by_filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.delete.amt_delete_by_id"><code class="docutils literal notranslate"><span class="pre">amt_delete_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.delete.snomed_delete_by_filter"><code class="docutils literal notranslate"><span class="pre">snomed_delete_by_filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.delete.snomed_delete_by_id"><code class="docutils literal notranslate"><span class="pre">snomed_delete_by_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Service.search">Service.search module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.amt_query_all"><code class="docutils literal notranslate"><span class="pre">amt_query_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.amt_search_by_fields_ret_all"><code class="docutils literal notranslate"><span class="pre">amt_search_by_fields_ret_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.amt_search_by_fields_ret_one"><code class="docutils literal notranslate"><span class="pre">amt_search_by_fields_ret_one()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.amt_search_by_id"><code class="docutils literal notranslate"><span class="pre">amt_search_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.amt_unmapped_search"><code class="docutils literal notranslate"><span class="pre">amt_unmapped_search()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.snomed_query_all"><code class="docutils literal notranslate"><span class="pre">snomed_query_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.snomed_search_by_fields_ret_all"><code class="docutils literal notranslate"><span class="pre">snomed_search_by_fields_ret_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.snomed_search_by_fields_ret_one"><code class="docutils literal notranslate"><span class="pre">snomed_search_by_fields_ret_one()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.search.snomed_search_by_id"><code class="docutils literal notranslate"><span class="pre">snomed_search_by_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Service.snomed_import">Service.snomed_import module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.snomed_import.build_snomed_table_from_dict"><code class="docutils literal notranslate"><span class="pre">build_snomed_table_from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.snomed_import.snomed_record_count"><code class="docutils literal notranslate"><span class="pre">snomed_record_count()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Service.update">Service.update module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.update.update_AU_Substance_SCTID_by_filters"><code class="docutils literal notranslate"><span class="pre">update_AU_Substance_SCTID_by_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.update.update_AU_Substance_SCTID_by_id"><code class="docutils literal notranslate"><span class="pre">update_AU_Substance_SCTID_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.update.update_Int_Substance_SCTID_by_filters"><code class="docutils literal notranslate"><span class="pre">update_Int_Substance_SCTID_by_filters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.update.update_Int_Substance_SCTID_by_id"><code class="docutils literal notranslate"><span class="pre">update_Int_Substance_SCTID_by_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Src.Service.version">Service.version module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.version.create_version"><code class="docutils literal notranslate"><span class="pre">create_version()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.version.delete_versions"><code class="docutils literal notranslate"><span class="pre">delete_versions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Src.Service.version.get_version"><code class="docutils literal notranslate"><span class="pre">get_version()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Src.SMTP.html">SMTP package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Src.Utils.html">Utils package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Automated AMT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="Src.html">Src package</a> &raquo;</li>
+        
+      <li>Service package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Src.Service.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="service-package">
+<h1>Service package<a class="headerlink" href="#service-package" title="Permalink to this heading">¶</a></h1>
+<section id="module-Src.Service.admin">
+<span id="service-admin-module"></span><h2>Service.admin module<a class="headerlink" href="#module-Src.Service.admin" title="Permalink to this heading">¶</a></h2>
+<p>The admin service module: Admin table services.</p>
+<p>Provides the application with the modelled CRUD functionality needed to manage
+the admin SQLite table.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.admin.create_admin">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.admin.</span></span><span class="sig-name descname"><span class="pre">create_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/admin.html#create_admin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.admin.create_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an Admin record within the applications Admin SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The admins username</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The admins password, this is expected to be encrypted prior to this function call</p></li>
+<li><p><strong>email</strong> (<em>str</em>) – The admins email address</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.admin.delete_admin">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.admin.</span></span><span class="sig-name descname"><span class="pre">delete_admin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/admin.html#delete_admin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.admin.delete_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the applications admin user by clearing all records from the Admin SQLite database table</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.admin.get_admin_email">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.admin.</span></span><span class="sig-name descname"><span class="pre">get_admin_email</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/admin.html#get_admin_email"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.admin.get_admin_email" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the applications admin users email address, queried from the admin SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The admins email address</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.admin.get_admin_user">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.admin.</span></span><span class="sig-name descname"><span class="pre">get_admin_user</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/admin.html#get_admin_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.admin.get_admin_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the applications admin user, queried from the admin SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The applications admin user</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="Src.Model.html#Src.Model.admin.Admin" title="Src.Model.admin.Admin">Admin</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.admin.get_admin_user_by_username">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.admin.</span></span><span class="sig-name descname"><span class="pre">get_admin_user_by_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/admin.html#get_admin_user_by_username"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.admin.get_admin_user_by_username" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the applications admin user by username, queried from the admin SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The applications admin username</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The applications admin user</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.admin.Admin" title="Src.Model.admin.Admin">Admin</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Service.amt_rebuild">
+<span id="service-amt-rebuild-module"></span><h2>Service.amt_rebuild module<a class="headerlink" href="#module-Src.Service.amt_rebuild" title="Permalink to this heading">¶</a></h2>
+<p>The amt rebuild service module: Amt table rebuild services.</p>
+<p>Provides the application with the modelled functionality needed to support 
+the import of a new AMT distribution into the Amt SQLite table.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.amt_rebuild.delete_amt_table">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.amt_rebuild.</span></span><span class="sig-name descname"><span class="pre">delete_amt_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/amt_rebuild.html#delete_amt_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.amt_rebuild.delete_amt_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes all records found within the AMT SQLite database table.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.amt_rebuild.rebuild_table_from_dict">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.amt_rebuild.</span></span><span class="sig-name descname"><span class="pre">rebuild_table_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/amt_rebuild.html#rebuild_table_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.amt_rebuild.rebuild_table_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates the Amt SQLite database table from a dictionary representation of an AMT distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dist</strong> (<em>dict</em>) – The new AMT distribution to import into the Amt SQLite database table</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Service.create">
+<span id="service-create-module"></span><h2>Service.create module<a class="headerlink" href="#module-Src.Service.create" title="Permalink to this heading">¶</a></h2>
+<p>The create service module: Create record services.</p>
+<p>Provides the application with the modelled create functionality needed to 
+construct a new AMT or Snomed database table record.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.create.create_amt">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.create.</span></span><span class="sig-name descname"><span class="pre">create_amt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">CTPP_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CTPP_PT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ARTG_ID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPP_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPUU_PT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPP_PT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPUU_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPP_TP_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPP_TP_PT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPUU_TP_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TPUU_TP_PT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MPP_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MPP_PT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MPUU_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MPUU_PT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MP_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MP_PT</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/create.html#create_amt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.create.create_amt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new Amt record within the Amt SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>CTPP_SCTID</strong> (<em>str</em>) – The new Amt records CTPP_SCTID field value</p></li>
+<li><p><strong>CTPP_PT</strong> (<em>str</em>) – The new Amt records CTPP_PT field value</p></li>
+<li><p><strong>ARTG_ID</strong> (<em>str</em>) – The new Amt records ARTG_ID field value</p></li>
+<li><p><strong>TPP_SCTID</strong> (<em>str</em>) – The new Amt records TPP_SCTID field value</p></li>
+<li><p><strong>TPUU_PT</strong> (<em>str</em>) – The new Amt records TPUU_PT field value</p></li>
+<li><p><strong>TPP_PT</strong> (<em>str</em>) – The new Amt records TPP_PT field value</p></li>
+<li><p><strong>TPUU_SCTID</strong> (<em>str</em>) – The new Amt records TPUU_SCTID field value</p></li>
+<li><p><strong>TPP_TP_SCTID</strong> (<em>str</em>) – The new Amt records TPP_TP_SCTID field value</p></li>
+<li><p><strong>TPP_TP_PT</strong> (<em>str</em>) – The new Amt records TPP_TP_PT field value</p></li>
+<li><p><strong>TPUU_TP_SCTID</strong> (<em>str</em>) – The new Amt records TPUU_TP_SCTID field value</p></li>
+<li><p><strong>TPUU_TP_PT</strong> (<em>str</em>) – The new Amt records TPUU_TP_PT field value</p></li>
+<li><p><strong>MPP_SCTID</strong> (<em>str</em>) – The new Amt records MPP_SCTID field value</p></li>
+<li><p><strong>MPP_PT</strong> (<em>str</em>) – The new Amt records MPP_PT field value</p></li>
+<li><p><strong>MPUU_SCTID</strong> (<em>str</em>) – The new Amt records MPUU_SCTID field value</p></li>
+<li><p><strong>MPUU_PT</strong> (<em>str</em>) – The new Amt records MPUU_PT field value</p></li>
+<li><p><strong>MP_SCTID</strong> (<em>str</em>) – The new Amt records MP_SCTID field value</p></li>
+<li><p><strong>MP_PT</strong> (<em>str</em>) – The new Amt records MP_PT field value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The newly created Amt record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Amt" title="Src.Model.amt.Amt">Amt</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.create.create_snomed">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.create.</span></span><span class="sig-name descname"><span class="pre">create_snomed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MP_PT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">AU_Substance_SCTID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Int_Substance_SCTID</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/create.html#create_snomed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.create.create_snomed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new Snomed record within the Snomed SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>MP_PT</strong> (<em>str</em>) – The new Snomed records MP_PT field value</p></li>
+<li><p><strong>AU_Substance_SCTID</strong> (<em>str</em>) – The new Snomed records AU_Substance_SCTID field value</p></li>
+<li><p><strong>Int_Substance_SCTID</strong> (<em>str</em>) – The new Snomed records Int_Substance_SCTID field value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The newly created Snomed record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Snomed" title="Src.Model.amt.Snomed">Snomed</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Service.delete">
+<span id="service-delete-module"></span><h2>Service.delete module<a class="headerlink" href="#module-Src.Service.delete" title="Permalink to this heading">¶</a></h2>
+<p>The delete service module: Delete record services.</p>
+<p>Provides the application with the modelled delete functionality needed to 
+delete an AMT or Snomed database table record.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.delete.amt_delete_by_filter">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.delete.</span></span><span class="sig-name descname"><span class="pre">amt_delete_by_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/delete.html#amt_delete_by_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.delete.amt_delete_by_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes an Amt record from the SQLite database table by field filter/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>JSON</em>) – The field filters to query by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The deleted Amt record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Amt" title="Src.Model.amt.Amt">Amt</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.delete.amt_delete_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.delete.</span></span><span class="sig-name descname"><span class="pre">amt_delete_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/delete.html#amt_delete_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.delete.amt_delete_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes an Amt record from the SQLite database table by ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>Int</em>) – The ID field to query by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The deleted Amt record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Amt" title="Src.Model.amt.Amt">Amt</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.delete.snomed_delete_by_filter">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.delete.</span></span><span class="sig-name descname"><span class="pre">snomed_delete_by_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/delete.html#snomed_delete_by_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.delete.snomed_delete_by_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a Snomed record from the SQLite database table by field filter/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filters</strong> (<em>JSON</em>) – The field filters to query by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The deleted Snomed record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Snomed" title="Src.Model.amt.Snomed">Snomed</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.delete.snomed_delete_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.delete.</span></span><span class="sig-name descname"><span class="pre">snomed_delete_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/delete.html#snomed_delete_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.delete.snomed_delete_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a Snomed record from the SQLite database table by ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>Int</em>) – The ID field to query by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The deleted Snomed record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Snomed" title="Src.Model.amt.Snomed">Snomed</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Service.search">
+<span id="service-search-module"></span><h2>Service.search module<a class="headerlink" href="#module-Src.Service.search" title="Permalink to this heading">¶</a></h2>
+<p>The search service module: Search record services.</p>
+<p>Provides the application with the modelled search functionality needed to 
+query for an AMT or Snomed database table record.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.amt_query_all">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">amt_query_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#amt_query_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.amt_query_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries all Amt records from the SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list containing all of the Amt records found within the table</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.amt_search_by_fields_ret_all">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">amt_search_by_fields_ret_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#amt_search_by_fields_ret_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.amt_search_by_fields_ret_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the Amt SQLite database table by field filter/s</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>search_filters</strong> (<em>JSON</em>) – The field filter/s to query by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list containing all retrieved Amt records</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.amt_search_by_fields_ret_one">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">amt_search_by_fields_ret_one</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#amt_search_by_fields_ret_one"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.amt_search_by_fields_ret_one" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the Amt SQLite database table by field filter/s</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>search_filters</strong> (<em>JSON</em>) – The field filter/s to query by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The retrieved Amt record or None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Amt/None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.amt_search_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">amt_search_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#amt_search_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.amt_search_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the Amt SQLite database table by id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>Int</em>) – The ID field value to query for</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Amt record found</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Amt" title="Src.Model.amt.Amt">Amt</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.amt_unmapped_search">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">amt_unmapped_search</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#amt_unmapped_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.amt_unmapped_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries all Amt records from that have no relation mapped to the Snomed SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list consisting of all Amt records that have no mapping to the Snomed SQLite database table</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Amt" title="Src.Model.amt.Amt">Amt</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.snomed_query_all">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">snomed_query_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#snomed_query_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.snomed_query_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries all Snomed records from the SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list containing all of the Snomed records found within the table</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.snomed_search_by_fields_ret_all">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">snomed_search_by_fields_ret_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#snomed_search_by_fields_ret_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.snomed_search_by_fields_ret_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the Snomed SQLite database table by field filter/s</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>search_filters</strong> (<em>JSON</em>) – The field filter/s to query by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list containing all retrieved Snomed records</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.snomed_search_by_fields_ret_one">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">snomed_search_by_fields_ret_one</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#snomed_search_by_fields_ret_one"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.snomed_search_by_fields_ret_one" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the Snomed SQLite database table by field filter/s</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>search_filters</strong> (<em>JSON</em>) – The field filter/s to query by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The retrieved Snomed record or None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Snomed/None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.search.snomed_search_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.search.</span></span><span class="sig-name descname"><span class="pre">snomed_search_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/search.html#snomed_search_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.search.snomed_search_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the Snomed SQLite database table by id (MP_PT)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>str</em>) – The MP_PT field value to query for</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Snomed record found</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Snomed" title="Src.Model.amt.Snomed">Snomed</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Service.snomed_import">
+<span id="service-snomed-import-module"></span><h2>Service.snomed_import module<a class="headerlink" href="#module-Src.Service.snomed_import" title="Permalink to this heading">¶</a></h2>
+<p>The snomed import service module: Snomed import services.</p>
+<p>Provides the application with the modelled Snomed import functionality needed to 
+construct the Snomed SQLite table.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.snomed_import.build_snomed_table_from_dict">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.snomed_import.</span></span><span class="sig-name descname"><span class="pre">build_snomed_table_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">snomed_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/snomed_import.html#build_snomed_table_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.snomed_import.build_snomed_table_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates the Snomed SQLite database table with values from the provided dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>snomed_dict</strong> (<em>dict</em>) – The dictionary containing the Snomed table records</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.snomed_import.snomed_record_count">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.snomed_import.</span></span><span class="sig-name descname"><span class="pre">snomed_record_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/snomed_import.html#snomed_record_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.snomed_import.snomed_record_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the Snomed SQLite database table to retrieve a record count.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of records found within the table</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Service.update">
+<span id="service-update-module"></span><h2>Service.update module<a class="headerlink" href="#module-Src.Service.update" title="Permalink to this heading">¶</a></h2>
+<p>The update service module: Update record services.</p>
+<p>Provides the application with the modelled update functionality needed to 
+update an existing AMT or Snomed database table record.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.update.update_AU_Substance_SCTID_by_filters">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.update.</span></span><span class="sig-name descname"><span class="pre">update_AU_Substance_SCTID_by_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/update.html#update_AU_Substance_SCTID_by_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.update.update_AU_Substance_SCTID_by_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries a Snomed record by field filter/s and updates the AU_Substance_SCTID field of a Snomed Record</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>JSON</em>) – The field filters to query by</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The value to update the AU_Substance_SCTID field to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updates Snomed record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Snomed" title="Src.Model.amt.Snomed">Snomed</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.update.update_AU_Substance_SCTID_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.update.</span></span><span class="sig-name descname"><span class="pre">update_AU_Substance_SCTID_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/update.html#update_AU_Substance_SCTID_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.update.update_AU_Substance_SCTID_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries a Snomed record by id (MP_PT) and updates the AU_Substance_SCTID field of a Snomed Record</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>) – The MP_PT field to query by</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The value to update the AU_Substance_SCTID field to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updates Snomed record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Snomed" title="Src.Model.amt.Snomed">Snomed</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.update.update_Int_Substance_SCTID_by_filters">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.update.</span></span><span class="sig-name descname"><span class="pre">update_Int_Substance_SCTID_by_filters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/update.html#update_Int_Substance_SCTID_by_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.update.update_Int_Substance_SCTID_by_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries a Snomed record by field filter/s and updates the Int_Substance_SCTID field of a Snomed Record</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filters</strong> (<em>JSON</em>) – The field filters to query by</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The value to update the Int_Substance_SCTID field to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updates Snomed record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Snomed" title="Src.Model.amt.Snomed">Snomed</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.update.update_Int_Substance_SCTID_by_id">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.update.</span></span><span class="sig-name descname"><span class="pre">update_Int_Substance_SCTID_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/update.html#update_Int_Substance_SCTID_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.update.update_Int_Substance_SCTID_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries a Snomed record by id (MP_PT) and updates the Int_Substance_SCTID field of a Snomed Record</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>) – The MP_PT field to query by</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The value to update the Int_Substance_SCTID field to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updates Snomed record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.amt.Snomed" title="Src.Model.amt.Snomed">Snomed</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Src.Service.version">
+<span id="service-version-module"></span><h2>Service.version module<a class="headerlink" href="#module-Src.Service.version" title="Permalink to this heading">¶</a></h2>
+<p>The version service module: Version table services.</p>
+<p>Provides the application with the modelled CRUD functionality needed to manage
+the version SQLite table.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.version.create_version">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.version.</span></span><span class="sig-name descname"><span class="pre">create_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/version.html#create_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.version.create_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new Version record within the Version SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>date</strong> (<em>str</em>) – The version date</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The file name</p></li>
+<li><p><strong>link</strong> (<em>str</em>) – The distribution download URL</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The newly created Version record</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="Src.Model.html#Src.Model.version.Version" title="Src.Model.version.Version">Version</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.version.delete_versions">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.version.</span></span><span class="sig-name descname"><span class="pre">delete_versions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/version.html#delete_versions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.version.delete_versions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the applications current Version record found within the SQLite database table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The deleted version record</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="Src.Model.html#Src.Model.version.Version" title="Src.Model.version.Version">Version</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Src.Service.version.get_version">
+<span class="sig-prename descclassname"><span class="pre">Src.Service.version.</span></span><span class="sig-name descname"><span class="pre">get_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Src/Service/version.html#get_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Src.Service.version.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries the Version SQLite database table for the applications current AMT
+distribution version record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Version record found within the SQLite database table</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="Src.Model.html#Src.Model.version.Version" title="Src.Model.version.Version">Version</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Src.Utils.html" class="btn btn-neutral float-right" title="Utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Src.Schema.html" class="btn btn-neutral float-left" title="Schema package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023, Ashley Travaini.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
