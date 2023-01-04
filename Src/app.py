@@ -26,6 +26,8 @@ def create_app(config):
     from Handler.export import export
     from ScheduledTask.scheduler import scheduler_init_app
     from Utils.startup_tasks import import_snomed_csv
+    from Utils.app_args import check_debug_arg, check_admin_arg
+    from Utils.bootstrap_admin import bootstrap_admin
     from flask import request
     import logging
 
@@ -56,6 +58,7 @@ def create_app(config):
         scheduler_init_app(app)
         mail.init_app(app)
         import_snomed_csv(app)
+        bootstrap_admin(app, check_admin_arg())
 
     @app.before_request
     def log_request():
@@ -66,12 +69,9 @@ def create_app(config):
 if __name__ == '__main__':
     from waitress import serve
     from config import AppConfig
-    from Utils.app_args import check_debug_arg, check_admin_arg
-    from Utils.bootstrap_admin import bootstrap_admin
     from Utils.app_logging import prod_logging
 
     app = create_app(AppConfig)
-    bootstrap_admin(app, check_admin_arg())
     
     if app.config['DEBUG']:
         app.run(port = 8080, debug = True, use_reloader=False)
