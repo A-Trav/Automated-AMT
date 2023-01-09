@@ -7,7 +7,7 @@ construct the Snomed SQLite table.
 
 from Database.database import db
 from Model.amt import Snomed
-from Utils.app_logging import log
+from Utils.app_logging import log, min_log
 
 @log
 def snomed_record_count():
@@ -19,7 +19,7 @@ def snomed_record_count():
     """
     return len(Snomed.query.all())
 
-@log
+@min_log
 def build_snomed_table_from_dict(snomed_dict):
     """
     Populates the Snomed SQLite database table with values from the provided dict.

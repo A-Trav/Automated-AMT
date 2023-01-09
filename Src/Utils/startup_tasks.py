@@ -7,9 +7,11 @@ Provides the application with tasks intended to be run on application startup.
 import pandas as pd
 from os.path import join
 
-from Utils.constants import SNOMED_DIR, SNOMED_CSV
 from Service.snomed_import import build_snomed_table_from_dict, snomed_record_count
+from Utils.constants import SNOMED_DIR, SNOMED_CSV
+from Utils.app_logging import min_log
 
+@min_log
 def import_snomed_csv(app):
     """
     Imports the applications SNOMED CSV file found within the Data directory, on in order for the

@@ -7,7 +7,7 @@ the import of a new AMT distribution into the Amt SQLite table.
 
 from Database.database import db
 from Model.amt import Amt
-from Utils.app_logging import log
+from Utils.app_logging import log, min_log
 
 @log
 def delete_amt_table():
@@ -17,7 +17,7 @@ def delete_amt_table():
     Amt.query.delete()
     db.session.commit()
 
-@log
+@min_log
 def rebuild_table_from_dict(dist):
     """
     Populates the Amt SQLite database table from a dictionary representation of an AMT distribution.

@@ -5,6 +5,7 @@ The root Flask server application.
 """
 
 from flask import Flask
+import sys
 
 def create_app(config):
     """
@@ -29,7 +30,9 @@ def create_app(config):
     from Utils.app_args import check_debug_arg, check_admin_arg
     from Utils.bootstrap_admin import bootstrap_admin
     from flask import request
-    import logging
+    from dotenv import load_dotenv
+
+    load_dotenv()
 
     # Initialise application
     app = Flask(__name__)
@@ -77,4 +80,5 @@ if __name__ == '__main__':
         app.run(port = 8080, debug = True, use_reloader=False)
     else:
         app.logger.info('Starting server')
+        print('Starting server on host: 127.0.0.1 port:8080', file=sys.stderr)
         serve(app, host='127.0.0.1', port = 8080, threads = 1)

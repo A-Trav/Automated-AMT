@@ -33,7 +33,6 @@ def importer_task(app):
     :type app: Flask applicaton
     """
     with app.app_context():
-        logging.info('Starting AMT distribution importer task.')
         try:
             setup_data_dir()
             versions = xml_response_to_version(get_distro_meta())
@@ -69,11 +68,10 @@ def importer_task(app):
                         
                 # Invalidate admin jwt to prevent db operation conflict with new distribution
                 reset_jwt(app)
+                logging.info('AMT distribution importer task finished.')
             else:
                 logging.info('Current AMT distribution is up to date.')
         except:
             logging.exception('AMT distribution update failure')
             alert_admin_failure()
-
-        logging.info('AMT distribution importer task finished.')
 
