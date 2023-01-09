@@ -101,6 +101,7 @@ The application can be deployed and run with the following command line argument
   -debug        Runs the application with Flasks development server
   -set-admin    Force reset of the API's admin user, required a new admin user to be set on startup
 ```
+
 ## Running Tests
 
 To run the applications test suite, use the following command in the applications root 
@@ -109,4 +110,9 @@ directory:
 ```bash
   pytest
 ```
+
+## Applications Integration with the NCTS
+
+To understand how this application integrates with the NCTS Server, view the NCTS's integration guides
+from here: [NCTS integration guides](https://www.healthterminologies.gov.au/library/DH_3405_2021_NCTS-Guide-for-Implementers_v1.2.pdf)
 
