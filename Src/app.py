@@ -72,13 +72,15 @@ def create_app(config):
 if __name__ == '__main__':
     from waitress import serve
     from config import AppConfig
+    import socket
     from Utils.app_logging import prod_logging
 
+    ip_address = socket.gethostbyname(socket.gethostname()) 
     app = create_app(AppConfig)
     
     if app.config['DEBUG']:
         app.run(port = 8080, debug = True, use_reloader=False)
     else:
         app.logger.info('Starting server')
-        print('Starting server on host: 127.0.0.1 port:8080', file=sys.stderr)
-        serve(app, host='127.0.0.1', port = 8080, threads = 1)
+        print('Starting server on host:', ip_address, 'port:8080', file=sys.stderr)
+        serve(app, host = ip_address, port = 8080, threads = 1)
