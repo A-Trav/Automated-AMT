@@ -102,6 +102,12 @@ The application can be deployed and run with the following command line argument
   -set-admin    Force reset of the API's admin user, required a new admin user to be set on startup
 ```
 
+## Environment Configuration
+
+The application has been produced with the applications required .env file. However, all secrets
+have been left blank. In order to run this application please contact the developer in order for
+to retrieve a set of unique secrets for your local application.
+
 ## Running Tests
 
 To run the applications test suite, use the following command in the applications root 
