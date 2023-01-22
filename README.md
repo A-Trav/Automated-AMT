@@ -57,7 +57,8 @@ authentication endpoint.
 ```
 
 To see examples on how to interact with the applications endpoints, import the Postman collection
-found here: [Automated AMT postman collection](https://github.com/A-Trav/Automated-AMT/blob/master/docs/Automated%20AMT.postman_collection.json)
+found here: [Automated AMT postman collection](https://github.com/A-Trav/Automated-AMT/blob/master/docs/Automated%20AMT.postman_collection.json).
+Please note, that you will be required to swap the 127.0.0.1 to the IPV4 address of the machine that the applicaion is being deployed on.
 
 ## Features
 
